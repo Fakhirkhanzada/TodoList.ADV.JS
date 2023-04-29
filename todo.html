@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Todo List</title>
+  <style>
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <h1>Todo List</h1>
+  <input type="text" id="taskInput" placeholder="Add a new task...">
+  <input type="text" id="searchInput" placeholder="Search tasks...">
+  <ul id="taskList"></ul>
+
+  <script>
+    
+    function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const taskList = document.getElementById('taskList');
+      
+      
+      const task = taskInput.value;
+      if (task !== '') {
+        const li = document.createElement('li');
+        li.textContent = task;
+        taskList.appendChild(li);
+        taskInput.value = '';
+      }
+    }
+    
+    function filterTasks() {
+      const searchInput = document.getElementById('searchInput');
+      const filter = searchInput.value.toLowerCase();
+      const tasks = document.getElementsByTagName('li');
+      for (let i = 0; i < tasks.length; i++) {
+        const task = tasks[i].textContent.toLowerCase();
+        if (task.includes(filter)) {
+          tasks[i].style.display = '';
+        } else {
+          tasks[i].style.display = 'none';
+        }
+      }
+    }
+    
+    document.getElementById('taskInput').addEventListener('keyup', function(event) {
+      if (event.key === 'Enter') {
+        addTask();
+      }
+    });
+    
+    document.getElementById('searchInput').addEventListener('input', filterTasks);
+  </script>
+</body>
+</html>
